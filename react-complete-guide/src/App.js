@@ -23,7 +23,9 @@ class App extends Component {
                 <Person
                     name={this.state.persons[1].name}
                     age={this.state.persons[1].age}
-                    click={this.switchNameHandler.bind(this, 'Efficient, Taylan paragraph click')}>My Hobbies: Racing </Person>
+                    click={this.switchNameHandler.bind(this, 'Efficient, Taylan paragraph click')}
+                    changed={this.nameChangedHandler}>My Hobbies:
+                    Racing </Person>
             </div>
         );
     }
@@ -34,6 +36,15 @@ class App extends Component {
             persons: [
                 {name: newName, age: 24},
                 {name: 'Yesim', age: 23}
+            ]
+        });
+    };
+
+    nameChangedHandler = (event) => {
+        this.setState({
+            persons: [
+                {name: 'Taylan', age: 24},
+                {name: event.target.value, age: 23}
             ]
         });
     };

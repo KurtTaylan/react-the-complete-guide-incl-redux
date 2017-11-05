@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import styleClasses from './App.css';
-import Person from '../components/Persons/Person/Person';
-import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
+import Persons from "../components/Persons/Persons";
+import Cockpit from "../components/Cockpit/Cockpit";
 
 class App extends Component {
 
@@ -16,40 +16,21 @@ class App extends Component {
 
     render() {
         let conditionalPersons = null;
-        let buttonClass = '';
         if (this.state.showPersons) {
-            conditionalPersons = (
-                <div>
-                    {this.state.persons.map((person, index) => {
-                        return <ErrorBoundary key={person.id}>
-                            <Person
-                                click={() => this.deletePersonHandler(index)}
-                                name={person.name}
-                                age={person.age}
-                                changed={(event) => this.nameChangedHandler(event, person.id)}/>
-                        </ErrorBoundary>
-                    })}
-                </div>
-            );
-            buttonClass = styleClasses.Red;
-        }
-
-        const assignedClasses = [];
-        if (this.state.persons.length <= 2) {
-            assignedClasses.push(styleClasses.red); // classes will be red
-        }
-
-        if (this.state.persons.length <= 1) {
-            assignedClasses.push(styleClasses.bold); // classes will be red
+            conditionalPersons = <Persons
+                persons={this.state.persons}
+                clicked={this.deletePersonHandler}
+                changed={this.nameChangedHandler}
+            />;
         }
 
         return (
             <div className={styleClasses.App}>
-                <h1>Hi, React Application</h1>
-                <p className={assignedClasses.join(' ')}> To enable person list please toggle the button</p>
-                <button className={buttonClass}
-                        onClick={this.togglePersonsHandler}>Toggle Person
-                </button>
+                <Cockpit
+                    persons={this.state.persons}
+                    showPersons={this.state.showPersons}
+                    toggleHandler={this.togglePersonsHandler}
+                />
                 {conditionalPersons}
             </div>
         );

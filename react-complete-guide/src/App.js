@@ -7,7 +7,8 @@ class App extends Component {
     state = {
         persons: [
             {id: '1', name: 'Taylan', age: 24},
-            {id: '2', name: 'Yesim', age: 23}
+            {id: '2', name: 'Yesim', age: 23},
+            {id: '3', name: 'John', age: 21}
         ],
         showPersons: false
     };
@@ -40,9 +41,19 @@ class App extends Component {
             style.backgroundColor = 'red';
         }
 
+        const classes = [];
+        if (this.state.persons.length <= 2) {
+            classes.push('red'); // classes will be red
+        }
+
+        if (this.state.persons.length <= 1) {
+            classes.push('bold'); // classes will be red
+        }
+
         return (
             <div className="App">
                 <h1>Hi, React Application</h1>
+                <p className={classes.join(' ')}> To enable person list please toggle the button</p>
                 <button style={style}
                         onClick={this.togglePersonsHandler}>Toggle Person
                 </button>

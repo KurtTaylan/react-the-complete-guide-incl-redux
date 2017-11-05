@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import './App.css';
-import Radium, {StyleRoot} from 'radium';
+import styleClasses from './App.css';
 import Person from './Person/Person';
 
 class App extends Component {
@@ -15,20 +14,8 @@ class App extends Component {
     };
 
     render() {
-        const style = {
-            backgroundColor: 'green',
-            color: 'white',
-            font: 'inherit',
-            border: '1px solid blue',
-            padding: '8px',
-            cursor: 'pointer',
-            ':hover': {
-                backgroundColor: 'lightgreen',
-                color: 'black'
-            }
-        };
-
         let conditionalPersons = null;
+        let buttonClass = '';
         if (this.state.showPersons) {
             conditionalPersons = (
                 <div>
@@ -42,35 +29,27 @@ class App extends Component {
                     })}
                 </div>
             );
-
-            style.backgroundColor = 'red';
-            style[':hover'] = {
-                backgroundColor: 'salmon',
-                color: 'black'
-            }
+            buttonClass = styleClasses.Red;
         }
 
-        const classes = [];
+        const assignedClasses = [];
         if (this.state.persons.length <= 2) {
-            classes.push('red'); // classes will be red
+            assignedClasses.push(styleClasses.red); // classes will be red
         }
 
         if (this.state.persons.length <= 1) {
-            classes.push('bold'); // classes will be red
+            assignedClasses.push(styleClasses.bold); // classes will be red
         }
 
         return (
-            <StyleRoot>
-
-                <div className="App">
-                    <h1>Hi, React Application</h1>
-                    <p className={classes.join(' ')}> To enable person list please toggle the button</p>
-                    <button style={style}
-                            onClick={this.togglePersonsHandler}>Toggle Person
-                    </button>
-                    {conditionalPersons}
-                </div>
-            </StyleRoot>
+            <div className={styleClasses.App}>
+                <h1>Hi, React Application</h1>
+                <p className={assignedClasses.join(' ')}> To enable person list please toggle the button</p>
+                <button className={buttonClass}
+                        onClick={this.togglePersonsHandler}>Toggle Person
+                </button>
+                {conditionalPersons}
+            </div>
         );
     }
 
@@ -100,4 +79,4 @@ class App extends Component {
     };
 }
 
-export default Radium(App);
+export default App;

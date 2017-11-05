@@ -20,6 +20,23 @@ class App extends Component {
             cursor: 'pointer'
         };
 
+        let conditionalPersons = null;
+        if (this.state.showPersons) {
+            conditionalPersons = (
+                <div>
+                    <Person
+                        name={this.state.persons[0].name}
+                        age={this.state.persons[0].age}/>
+
+                    <Person
+                        name={this.state.persons[1].name}
+                        age={this.state.persons[1].age}
+                        click={this.switchNameHandler.bind(this, 'Efficient, Taylan paragraph click')}
+                        changed={this.nameChangedHandler}>My Hobbies:
+                        Racing </Person>
+                </div>
+            );
+        }
 
         return (
             <div className="App">
@@ -27,23 +44,7 @@ class App extends Component {
                 <button style={style}
                         onClick={this.togglePersonsHandler}>Switch Name
                 </button>
-                {
-                    this.state.showPersons ?
-                        <div>
-                            <Person
-                                name={this.state.persons[0].name}
-                                age={this.state.persons[0].age}/>
-
-                            <Person
-                                name={this.state.persons[1].name}
-                                age={this.state.persons[1].age}
-                                click={this.switchNameHandler.bind(this, 'Efficient, Taylan paragraph click')}
-                                changed={this.nameChangedHandler}>My Hobbies:
-                                Racing </Person>
-                        </div>
-                        :
-                        null
-                }
+                {conditionalPersons}
             </div>
         );
     }

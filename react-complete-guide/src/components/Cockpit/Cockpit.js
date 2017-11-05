@@ -18,7 +18,8 @@ const cockpit = (props) => {
 
     return (
         <div className="Cockpit">
-            <h1>Hi, React Application</h1>
+            <h1>{props.appTitle}</h1>
+            <h2>Hi, React Application</h2>
             <p className={assignedClasses.join(' ')}> To enable person list please toggle the button</p>
             <button className={buttonClass}
                     onClick={props.toggleHandler}>Toggle Person

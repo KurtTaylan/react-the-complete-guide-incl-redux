@@ -5,16 +5,30 @@ import Cockpit from "../components/Cockpit/Cockpit";
 
 class App extends Component {
 
-    state = {
-        persons: [
-            {id: '1', name: 'Taylan', age: 24},
-            {id: '2', name: 'Yesim', age: 23},
-            {id: '3', name: 'John', age: 21}
-        ],
-        showPersons: false
-    };
+    constructor(props) {
+        super(props);
+        console.log('inside App constructor', props);
+        this.state = {
+            persons: [
+                {id: '1', name: 'Taylan', age: 24},
+                {id: '2', name: 'Yesim', age: 23},
+                {id: '3', name: 'John', age: 21}
+            ],
+            showPersons: false
+        };
+    }
+
+    componentWillMount() {
+        console.log('inside App componentWillMount');
+    }
+
+    componentDidMount() {
+        console.log('inside App componentDidMount');
+    }
+
 
     render() {
+        console.log('inside App render method');
         let conditionalPersons = null;
         if (this.state.showPersons) {
             conditionalPersons = <Persons

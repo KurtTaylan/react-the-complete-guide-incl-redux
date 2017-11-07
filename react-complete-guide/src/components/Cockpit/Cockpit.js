@@ -1,30 +1,34 @@
 import React from 'react';
-import styleClasses from './Cockpit.css'
+import styleClasses from './Cockpit.css';
+import Aux from '../../hoc/Aux';
 
 const cockpit = (props) => {
     const assignedClasses = [];
-    let buttonClass = '';
+    let buttonClass = styleClasses.Button;
+
+    if (props.showPersons) {
+        buttonClass = [styleClasses.Button, styleClasses.Red].join(' ');
+    }
+
     if (props.persons.length <= 2) {
-        assignedClasses.push(styleClasses.red); // classes will be red
+        buttonClass = [styleClasses.Button, styleClasses.Red].join(' '); // classes will be red
+
     }
 
     if (props.persons.length <= 1) {
-        assignedClasses.push(styleClasses.bold); // classes will be red
-    }
+        buttonClass = [styleClasses.Button, styleClasses.bold].join(' '); // classes will be bold
 
-    if (props.showPersons) {
-        buttonClass = styleClasses.Red;
     }
 
     return (
-        <div className="Cockpit">
+        <Aux>
             <h1>{props.appTitle}</h1>
             <h2>Hi, React Application</h2>
             <p className={assignedClasses.join(' ')}> To enable person list please toggle the button</p>
             <button className={buttonClass}
                     onClick={props.toggleHandler}>Toggle Person
             </button>
-        </div>
+        </Aux>
     );
 }
 

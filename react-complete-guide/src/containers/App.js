@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import styleClasses from './App.css';
 import Persons from "../components/Persons/Persons";
 import Cockpit from "../components/Cockpit/Cockpit";
+import WithClassDiv from "../hoc/WithClassDiv";
 
 class App extends PureComponent {
 
@@ -30,11 +31,11 @@ class App extends PureComponent {
         console.log('[UPDATE]inside App componentWillReceiveProps', nextProps);
     }
 
-   /* shouldComponentUpdate(nextProps, nextState) {
-        console.log('[UPDATE]inside App shouldComponentUpdate', nextProps);
-        return nextState.persons !== this.state.persons ||
-            nextState.showPersons !== this.state.showPersons;
-    }*/
+    /* shouldComponentUpdate(nextProps, nextState) {
+         console.log('[UPDATE]inside App shouldComponentUpdate', nextProps);
+         return nextState.persons !== this.state.persons ||
+             nextState.showPersons !== this.state.showPersons;
+     }*/
 
     componentWillUpdate(nextProps, nextState) {
         console.log('[UPDATE]inside App componentWillUpdate', nextProps);
@@ -57,7 +58,7 @@ class App extends PureComponent {
         }
 
         return (
-            <div className={styleClasses.App}>
+            <WithClassDiv classes={styleClasses.App}>
                 <button onClick={() => {
                     this.setState({showPersons: true})
                 }}>Show Persons
@@ -69,7 +70,7 @@ class App extends PureComponent {
                     toggleHandler={this.togglePersonsHandler}
                 />
                 {conditionalPersons}
-            </div>
+            </WithClassDiv>
         );
     }
 

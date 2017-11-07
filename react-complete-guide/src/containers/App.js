@@ -26,6 +26,24 @@ class App extends Component {
         console.log('inside App componentDidMount');
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log('[UPDATE]inside App componentWillReceiveProps', nextProps);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log('[UPDATE]inside App shouldComponentUpdate', nextProps);
+        return nextState.persons !== this.state.persons ||
+            nextState.showPersons !== this.state.showPersons;
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        console.log('[UPDATE]inside App componentWillUpdate', nextProps);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log('[UPDATE]inside App componentDidUpdate', prevProps);
+    }
+
 
     render() {
         console.log('inside App render method');
@@ -40,6 +58,10 @@ class App extends Component {
 
         return (
             <div className={styleClasses.App}>
+                <button onClick={() => {
+                    this.setState({showPersons: true})
+                }}>Show Persons
+                </button>
                 <Cockpit
                     appTitle={this.props.title}
                     persons={this.state.persons}

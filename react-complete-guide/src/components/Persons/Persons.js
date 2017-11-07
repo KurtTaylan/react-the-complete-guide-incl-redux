@@ -23,7 +23,9 @@ class Persons extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         console.log('[UPDATE]inside Persons shouldComponentUpdate', nextProps);
-        return nextProps.persons !== this.props.persons;
+        return nextProps.persons !== this.props.persons ||
+            nextProps.changed !== this.props.changed ||
+            nextProps.clicked !== this.props.clicked;
     }
 
     componentWillUpdate(nextProps, nextState) {
@@ -40,7 +42,7 @@ class Persons extends Component {
         return this.props.persons.map((person, index) => {
             return <ErrorBoundary key={person.id}>
                 <Person
-                    click={() => this.props.clicked(index)}
+                    clicked={() => this.props.clicked(index)}
                     name={person.name}
                     age={person.age}
                     changed={(event) => this.props.changed(event, person.id)}/>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import styledClasses from './Person.css'
-import WithClassDiv from '../../../hoc/WithClassDiv'
+import withClassDiv from '../../../hoc/withClassDiv'
+import Aux from "../../../hoc/Aux";
 
 
 class Person extends Component {
@@ -27,13 +28,13 @@ class Person extends Component {
             </div>
         );*/
         return (
-            <WithClassDiv classes={styledClasses.Person}>
+            <Aux>
                 <p onClick={this.props.clicked}>I'm a {this.props.name} and I am {this.props.age} years old!</p>
                 <p>{this.props.children}</p>
                 <input type="text" onChange={this.props.changed} value={this.props.name}/>
-            </WithClassDiv>
+            </Aux>
         );
     }
 }
 
-export default Person;
+export default withClassDiv(Person, styledClasses.Person);

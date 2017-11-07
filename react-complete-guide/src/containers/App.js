@@ -2,7 +2,8 @@ import React, {PureComponent} from 'react';
 import styleClasses from './App.css';
 import Persons from "../components/Persons/Persons";
 import Cockpit from "../components/Cockpit/Cockpit";
-import WithClassDiv from "../hoc/WithClassDiv";
+import withClassDiv from "../hoc/withClassDiv";
+import Aux from "../hoc/Aux";
 
 class App extends PureComponent {
 
@@ -58,7 +59,7 @@ class App extends PureComponent {
         }
 
         return (
-            <WithClassDiv classes={styleClasses.App}>
+            <Aux>
                 <button onClick={() => {
                     this.setState({showPersons: true})
                 }}>Show Persons
@@ -70,7 +71,7 @@ class App extends PureComponent {
                     toggleHandler={this.togglePersonsHandler}
                 />
                 {conditionalPersons}
-            </WithClassDiv>
+            </Aux>
         );
     }
 
@@ -100,4 +101,4 @@ class App extends PureComponent {
     };
 }
 
-export default App;
+export default withClassDiv(App, styleClasses.App);

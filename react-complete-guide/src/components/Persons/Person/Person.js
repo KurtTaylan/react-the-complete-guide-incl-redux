@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import styledClasses from './Person.css'
-import withClassDiv from '../../../hoc/withClassDiv'
+import PropTypes from 'prop-types';
+import styledClasses from './Person.css';
+import withClassDiv from '../../../hoc/withClassDiv';
 import Aux from "../../../hoc/Aux";
 
 
@@ -36,5 +37,12 @@ class Person extends Component {
         );
     }
 }
+
+Person.propTypes = {
+    clicked: PropTypes.func,
+    name: PropTypes.string,
+    age: PropTypes.number,
+    changed: PropTypes.func
+};
 
 export default withClassDiv(Person, styledClasses.Person);

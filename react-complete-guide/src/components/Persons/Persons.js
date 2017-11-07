@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 import Person from "./Person/Person";
 
-class Persons extends Component {
+class Persons extends PureComponent {
 
     constructor(props) {
         super(props);
@@ -21,13 +21,13 @@ class Persons extends Component {
         console.log('[UPDATE]inside Persons componentWillReceiveProps', nextProps);
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+   /* shouldComponentUpdate(nextProps, nextState) {
         console.log('[UPDATE]inside Persons shouldComponentUpdate', nextProps);
         return nextProps.persons !== this.props.persons ||
             nextProps.changed !== this.props.changed ||
             nextProps.clicked !== this.props.clicked;
     }
-
+*/
     componentWillUpdate(nextProps, nextState) {
         console.log('[UPDATE]inside Persons componentWillUpdate', nextProps);
     }

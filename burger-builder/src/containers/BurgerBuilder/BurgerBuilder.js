@@ -5,8 +5,9 @@ import Aux from "../../hoc/Aux/Aux";
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
-import orderClient from "../../client-orders";
 import Spinner from "../../components/UI/Spinner/Spinner";
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import orderClient from "../../client-orders";
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -55,7 +56,7 @@ class BurgerBuilder extends Component {
                 currency: 'TRY'
             }
         };
-        /*orderClient.post('/orders.json', order)
+        orderClient.post('/orders.json', order)
             .then(response => {
                 console.log(response);
                 this.setState({
@@ -69,7 +70,7 @@ class BurgerBuilder extends Component {
                     loading: false,
                     purchasing: false
                 });
-            });*/
+            });
     };
 
     updatePurchaseState(ingredients) {
@@ -166,4 +167,4 @@ class BurgerBuilder extends Component {
     }
 }
 
-export default BurgerBuilder;
+export default withErrorHandler(BurgerBuilder, orderClient);

@@ -27,7 +27,7 @@ class BurgerBuilder extends Component {
     };
 
     componentDidMount() {
-        baseClient.get('/ingredient')
+        baseClient.get('/ingredient.json')
             .then(response => {
                 this.setState({
                     ingredients: response.data,

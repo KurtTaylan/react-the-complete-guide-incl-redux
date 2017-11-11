@@ -7,7 +7,7 @@ import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
-import orderClient from "../../client-orders";
+import baseClient from "../../client-base";
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -17,19 +17,24 @@ const INGREDIENT_PRICES = {
 };
 
 class BurgerBuilder extends Component {
-
     state = {
-        ingredients: {
-            salad: 0,
-            bacon: 0,
-            cheese: 0,
-            meat: 0
-        },
+        ingredients: null,
         totalPrice: 4,
         notPurchaseable: true,
         purchasing: false,
-        loading: false
+        loading: false,
+        error: false
     };
+
+    componentDidMount() {
+        baseClient.get('/ingredient')
+            .then(response => {
+                this.setState({
+                    ingredients: response.data,
+                })
+            }).catch(error => this.setState({error: true}));
+    }
+
 
     purchaseHandler = () => {
         this.setState({purchasing: true});
@@ -56,7 +61,7 @@ class BurgerBuilder extends Component {
                 currency: 'TRY'
             }
         };
-        orderClient.post('/orders.json', order)
+        baseClient.post('/orders.json', order)
             .then(response => {
                 console.log(response);
                 this.setState({
@@ -134,12 +139,27 @@ class BurgerBuilder extends Component {
             disabledInfo[key] = disabledInfo[key] <= 0;
         }
 
-        let orderSummary = <OrderSummary
-            totalPrice={this.state.totalPrice}
-            ingredients={this.state.ingredients}
-            purchaseContinued={this.purchaseContinueHandler}
-            purchaseCanceled={this.purchaseCancelHandler}/>;
+        let burger = this.state.error ? <p>Ingredients can't be loaded.</p> : <Spinner/>;
+        let orderSummary = null;
+        if (this.state.ingredients) {
+            burger = (
+                <Aux>
+                    <Burger ingredients={this.state.ingredients}/>
+                    <BuildControls
+                        ingredientAdded={this.addIngredientHandler}
+                        ingredientRemoved={this.removeIngredientHandler}
+                        disabled={disabledInfo}
+                        totalPrice={this.state.totalPrice}
+                        notPurchaseable={this.state.notPurchaseable}
+                        ordered={this.purchaseHandler}/>
+                </Aux>);
 
+            orderSummary = <OrderSummary
+                totalPrice={this.state.totalPrice}
+                ingredients={this.state.ingredients}
+                purchaseContinued={this.purchaseContinueHandler}
+                purchaseCanceled={this.purchaseCancelHandler}/>;
+        }
         if (this.state.loading) {
             orderSummary = <Spinner/>
         }
@@ -149,22 +169,12 @@ class BurgerBuilder extends Component {
                 <Modal
                     show={this.state.purchasing}
                     modalClosed={this.purchaseCancelHandler}>
-
                     {orderSummary}
-
                 </Modal>
-                <Burger ingredients={this.state.ingredients}/>
-                <BuildControls
-                    ingredientAdded={this.addIngredientHandler}
-                    ingredientRemoved={this.removeIngredientHandler}
-                    disabled={disabledInfo}
-                    totalPrice={this.state.totalPrice}
-                    notPurchaseable={this.state.notPurchaseable}
-                    ordered={this.purchaseHandler}
-                />
+                {burger}
             </Aux>
         );
     }
 }
 
-export default withErrorHandler(BurgerBuilder, orderClient);
+export default withErrorHandler(BurgerBuilder, baseClient);

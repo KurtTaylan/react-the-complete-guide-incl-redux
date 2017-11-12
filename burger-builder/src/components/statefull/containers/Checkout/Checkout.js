@@ -6,11 +6,21 @@ import CheckoutSummary from "../../../stateless/dummy/Order/CheckoutSummary/Chec
 class Checkout extends Component {
     state = {
         ingredients: {
-            meat: 1,
-            cheese: 1,
-            bacon: 1,
-            salad: 1
+            meat: null,
+            cheese: null,
+            bacon: null,
+            salad: null
         }
+    }
+
+    componentDidMount() {
+        const query = new URLSearchParams(this.props.location.search);
+        const ingredients = {};
+        for (let param of query.entries()) {
+            console.log(param);
+            ingredients[param[0]] = +param[1];
+        }
+        this.setState({ingredients: ingredients})
     }
 
     checkoutPayoutHandler = () => {

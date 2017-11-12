@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import Order from "../../../stateless/dummy/Order/Order";
 import baseClient from '../../../../client-base'
 import withErrorHandler from "../../../stateless/hoc/withErrorHandler/withErrorHandler";
@@ -38,7 +37,13 @@ class Orders extends Component {
     render() {
         return (
             <div>
-                <Order/>
+                {this.state.orders.map(order => {
+                    return (<Order
+                            key={order.id}
+                            ingredients={order.ingredients}
+                            totalPrice={+order.totalPrice}/>
+                    );
+                })}
             </div>
         );
     }

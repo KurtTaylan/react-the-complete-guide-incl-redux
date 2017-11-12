@@ -2,19 +2,66 @@ import React, {Component} from 'react';
 
 import styledClasses from './ContactData.css'
 import baseClient from '../../../../../client-base'
-import Button from "../../../../stateless/UI/Button/Button";
-import Spinner from "../../../../stateless/UI/Spinner/Spinner";
+import Button from "../../../../stateless/dummy/UI/Button/Button";
+import Spinner from "../../../../stateless/dummy/UI/Spinner/Spinner";
 import Aux from "../../../../stateless/hoc/Aux/Aux";
+import Input from "../../../../stateless/dummy/UI/Input/Input";
 
 class ContactData extends Component {
     state = {
-        name: null,
-        surname: null,
-        email: null,
-        deliveryMethod: null,
-        address: {
-            city: null,
-            country: null
+        orderForm: {
+            name: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeHolder: 'name'
+                },
+                value: ''
+            },
+            surname: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeHolder: 'surname'
+                },
+                value: ''
+            },
+            email: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeHolder: 'email'
+                },
+                value: ''
+            },
+            deliveryMethod: {
+                elementType: 'select',
+                elementConfig: {
+                    placeHolder: 'delivery method',
+                    options: [
+                        {value: 'ups', displayValue: 'UPS'},
+                        {value: 'mng', displayValue: 'MNG'},
+                        {value: 'yurtici', displayValue: 'Yurtici'}
+                    ]
+                },
+                value: ''
+            },
+            city: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeHolder: 'city'
+                },
+                value: ''
+            },
+            country: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeHolder: 'country'
+                },
+                value: ''
+            },
         },
         loading: false
     }
@@ -56,17 +103,25 @@ class ContactData extends Component {
     }
 
     render() {
+        const formElementArray = [];
+        for (let key in this.state.orderForm) {
+            formElementArray.push({
+                id: key,
+                config: this.state.orderForm[key]
+            });
+        }
+
         let form = (
             <Aux>
                 <h4>Enter your Contact Data</h4>
                 <form>
-                    <input className={styledClasses.Input} type="text" name="name" placeholder="Taylan"/>
-                    <input className={styledClasses.Input} type="text" name="surname" placeholder="Kurt"/>
-                    <input className={styledClasses.Input} type="text" name="email"
-                           placeholder="taylankurt34@gmail.com"/>
-                    <input className={styledClasses.Input} type="text" name="city" placeholder="Istanbul"/>
-                    <input className={styledClasses.Input} type="text" name="country" placeholder="Turkey"/>
-                    <input className={styledClasses.Input} type="text" name="deliveryMethod" placeholder="UPS"/>
+                    {formElementArray.map(formElement => {
+                        return <Input
+                            key={formElement.id}
+                            elementType={formElement.config.elementType}
+                            elementConfig={formElement.config.elementConfig}
+                            value={formElement.config.value}/>
+                    })}
                     <Button buttonType="Success" clicked={this.orderHandler}>ORDER</Button>
                 </form>
             </Aux>

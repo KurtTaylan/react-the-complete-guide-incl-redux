@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 
-import Modal from "../../../stateless/UI/Modal/Modal";
+import Modal from "../../../stateless/dummy/UI/Modal/Modal";
 import Aux from "../../../stateless/hoc/Aux/Aux";
 import Burger from "../../../stateless/dummy/Burger/Burger";
 import BuildControls from "../../../stateless/dummy/Burger/BuildControls/BuildControls";
 import OrderSummary from "../../../stateless/dummy/Burger/OrderSummary/OrderSummary";
-import Spinner from "../../../stateless/UI/Spinner/Spinner";
+import Spinner from "../../../stateless/dummy/UI/Spinner/Spinner";
 import withErrorHandler from "../../../stateless/hoc/withErrorHandler/withErrorHandler";
 import baseClient from "../../../../client-base";
 

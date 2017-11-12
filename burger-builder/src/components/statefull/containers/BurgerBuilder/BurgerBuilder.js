@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 
-import Modal from "../../components/UI/Modal/Modal";
-import Aux from "../../hoc/Aux/Aux";
-import Burger from "../../components/Burger/Burger";
-import BuildControls from "../../components/Burger/BuildControls/BuildControls";
-import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
-import Spinner from "../../components/UI/Spinner/Spinner";
-import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
-import baseClient from "../../client-base";
+import Modal from "../../../stateless/UI/Modal/Modal";
+import Aux from "../../../stateless/hoc/Aux/Aux";
+import Burger from "../../../stateless/dummy/Burger/Burger";
+import BuildControls from "../../../stateless/dummy/Burger/BuildControls/BuildControls";
+import OrderSummary from "../../../stateless/dummy/Burger/OrderSummary/OrderSummary";
+import Spinner from "../../../stateless/UI/Spinner/Spinner";
+import withErrorHandler from "../../../stateless/hoc/withErrorHandler/withErrorHandler";
+import baseClient from "../../../../client-base";
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -45,7 +45,7 @@ class BurgerBuilder extends Component {
     };
 
     purchaseContinueHandler = () => {
-        this.setState({loading: true});
+        /*this.setState({loading: true});
         const order = {
             ingredients: this.state.ingredients,
             totalPrice: this.state.totalPrice,
@@ -75,7 +75,8 @@ class BurgerBuilder extends Component {
                     loading: false,
                     purchasing: false
                 });
-            });
+            });*/
+        this.props.history.push('/checkout');
     };
 
     updatePurchaseState(ingredients) {

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
+import CheckoutSummary from "../../../stateless/dummy/Order/CheckoutSummary/CheckoutSummary";
 
 
 class Checkout extends Component {
@@ -13,10 +13,20 @@ class Checkout extends Component {
         }
     }
 
+    checkoutPayoutHandler = () => {
+        this.props.history.replace(this.props.match.url + '/contact-data');
+    };
+
+    checkoutCancelHandler = () => {
+        this.props.history.goBack();
+    };
+
     render() {
         return (
             <div>
                 <CheckoutSummary
+                    buy={this.checkoutPayoutHandler}
+                    cancel={this.checkoutCancelHandler}
                     ingredients={this.state.ingredients}/>
             </div>
         );

@@ -14,7 +14,7 @@ class ContactData extends Component {
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
-                    placeHolder: 'name'
+                    placeholder: 'name'
                 },
                 value: ''
             },
@@ -22,7 +22,7 @@ class ContactData extends Component {
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
-                    placeHolder: 'surname'
+                    placeholder: 'surname'
                 },
                 value: ''
             },
@@ -30,27 +30,16 @@ class ContactData extends Component {
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
-                    placeHolder: 'email'
+                    placeholder: 'email'
                 },
                 value: ''
             },
-            deliveryMethod: {
-                elementType: 'select',
-                elementConfig: {
-                    placeHolder: 'delivery method',
-                    options: [
-                        {value: 'ups', displayValue: 'UPS'},
-                        {value: 'mng', displayValue: 'MNG'},
-                        {value: 'yurtici', displayValue: 'Yurtici'}
-                    ]
-                },
-                value: ''
-            },
+
             city: {
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
-                    placeHolder: 'city'
+                    placeholder: 'city'
                 },
                 value: ''
             },
@@ -58,7 +47,18 @@ class ContactData extends Component {
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
-                    placeHolder: 'country'
+                    placeholder: 'country'
+                },
+                value: ''
+            },
+            deliveryMethod: {
+                elementType: 'select',
+                elementConfig: {
+                    options: [
+                        {value: 'ups', displayValue: 'UPS'},
+                        {value: 'mng', displayValue: 'MNG'},
+                        {value: 'yurtici', displayValue: 'Yurtici'}
+                    ]
                 },
                 value: ''
             },

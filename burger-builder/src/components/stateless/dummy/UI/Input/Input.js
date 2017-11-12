@@ -10,10 +10,25 @@ const input = (props) => {
                                      className={styledClasses.InputElement}
                                      value={props.value}/>;
             break;
+        case ('select'):
+            inputElement = (
+                <select {...props.elementConfig}
+                        className={styledClasses.InputElement}
+                        value={props.value}>
+                    {props.elementConfig.options.map(option => {
+                        return <option
+                            key={option.value}
+                            value={option.value}>
+                            {option.displayValue}
+                        </option>
+                    })}
+                </select>);
+            break;
         default:
             inputElement = <input {...props.elementConfig}
                                   className={styledClasses.InputElement}
                                   value={props.value}/>;
+            break;
     }
 
     return (

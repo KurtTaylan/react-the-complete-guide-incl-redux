@@ -69,20 +69,16 @@ class ContactData extends Component {
     orderHandler = (event) => {
         event.preventDefault();
         this.setState({loading: true});
+
+        let formData = {};
+        for(let formElementId in this.state.orderForm){
+            formData[formElementId] = this.state.orderForm[formElementId].value;
+        }
+
         const order = {
             ingredients: this.props.ingredients,
             totalPrice: this.props.totalPrice,
-            customer: {
-                name: 'Taylan',
-                surname: 'Kurt',
-                email: 'taylankurt34@gmail.com',
-                deliveryMethod: 'UPS',
-                address: {
-                    city: 'İstanbul',
-                    country: 'Turkey'
-                },
-                currency: 'TRY'
-            }
+            orderData: formData
         };
         baseClient.post('/orders.json', order)
             .then(response => {
@@ -110,7 +106,7 @@ class ContactData extends Component {
         updatedOrderFormElement.value = event.target.value;
         updatedOrderForm[inputId] = updatedOrderFormElement;
         this.setState({
-           orderForm: updatedOrderForm
+            orderForm: updatedOrderForm
         });
     }
 
@@ -126,7 +122,7 @@ class ContactData extends Component {
         let form = (
             <Aux>
                 <h4>Enter your Contact Data</h4>
-                <form>
+                <form onSubmit={this.orderHandler}>
                     {formElementArray.map(formElement => {
                         return <Input
                             key={formElement.id}
@@ -135,7 +131,7 @@ class ContactData extends Component {
                             value={formElement.config.value}
                             changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
                     })}
-                    <Button buttonType="Success" clicked={this.orderHandler}>ORDER</Button>
+                    <Button buttonType="Success">ORDER</Button>
                 </form>
             </Aux>
         );

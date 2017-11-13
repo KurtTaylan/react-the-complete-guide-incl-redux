@@ -7,6 +7,10 @@ import Spinner from "../../../../stateless/dummy/UI/Spinner/Spinner";
 import Aux from "../../../../stateless/hoc/Aux/Aux";
 import Input from "../../../../stateless/dummy/UI/Input/Input";
 
+const INVALID_EMPTY_STRING = 'Check for Empty Input';
+const INVALID_MIN_LENGTH = 'Check for Min Length';
+const INVALID_MAX_LENGTH = 'Check for Max Length';
+
 class ContactData extends Component {
     state = {
         orderForm: {
@@ -21,7 +25,8 @@ class ContactData extends Component {
                     required: true
                 },
                 valid: false,
-                touched: false
+                touched: false,
+                errorMessage: ''
             },
             surname: {
                 elementType: 'input',
@@ -34,7 +39,8 @@ class ContactData extends Component {
                     required: true
                 },
                 valid: false,
-                touched: false
+                touched: false,
+                errorMessage: ''
             },
             email: {
                 elementType: 'input',
@@ -47,7 +53,8 @@ class ContactData extends Component {
                     required: true
                 },
                 valid: false,
-                touched: false
+                touched: false,
+                errorMessage: ''
             },
 
             city: {
@@ -61,7 +68,8 @@ class ContactData extends Component {
                     required: true
                 },
                 valid: false,
-                touched: false
+                touched: false,
+                errorMessage: ''
             },
             country: {
                 elementType: 'input',
@@ -76,7 +84,8 @@ class ContactData extends Component {
                     maxLength: 15
                 },
                 valid: false,
-                touched: false
+                touched: false,
+                errorMessage: ''
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -87,10 +96,11 @@ class ContactData extends Component {
                         {value: 'yurtici', displayValue: 'Yurtici'}
                     ]
                 },
-                value: '',
+                value: 'yurtici',
                 touched: false
             },
         },
+        isFormValid: false,
         loading: false
     }
 
@@ -127,20 +137,36 @@ class ContactData extends Component {
     }
 
     checkValidity = (value, rules) => {
-        let isValid = true;
-        if (rules.required) {
-            isValid = value.trim() !== '' && isValid;
+        let validity = {
+            isValid: true,
+            errorMessage: ''
+        };
+
+        if (rules) {
+
+            if (rules.required) {
+                validity.isValid = value.trim() !== '' && validity.isValid;
+                if (validity.isValid) {
+                    validity.errorMessage = INVALID_EMPTY_STRING
+                }
+            }
+
+            if (rules.minLength) {
+                validity.isValid = value.length >= rules.minLength && validity.isValid;
+                if (validity.isValid) {
+                    validity.errorMessage = INVALID_MIN_LENGTH
+                }
+            }
+
+            if (rules.maxLength) {
+                validity.isValid = value.length <= rules.maxLength && validity.isValid;
+                if (validity.isValid) {
+                    validity.errorMessage = INVALID_MAX_LENGTH
+                }
+            }
         }
 
-        if (rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid;
-        }
-
-        if (rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid;
-        }
-
-        return isValid;
+        return validity;
     };
 
     inputChangedHandler = (event, inputId) => {
@@ -149,11 +175,24 @@ class ContactData extends Component {
         };
         let updatedOrderFormElement = {...updatedOrderForm[inputId]};
         updatedOrderFormElement.value = event.target.value;
-        updatedOrderFormElement.valid = this.checkValidity(updatedOrderFormElement.value, updatedOrderFormElement.validation)
+
+        let validity = this.checkValidity(updatedOrderFormElement.value, updatedOrderFormElement.validation);
+        updatedOrderFormElement.valid = validity.isValid;
+        updatedOrderFormElement.errorMessage = validity.errorMessage;
         updatedOrderFormElement.touched = true;
         updatedOrderForm[inputId] = updatedOrderFormElement;
-        console.log(updatedOrderFormElement);
-        this.setState({orderForm: updatedOrderForm});
+
+        let isFormValid = true;
+        for (let inputId in updatedOrderForm) {
+            if (updatedOrderForm[inputId].validation) {
+                isFormValid = updatedOrderForm[inputId].valid && isFormValid;
+            }
+        }
+
+        this.setState({
+            orderForm: updatedOrderForm,
+            isFormValid: isFormValid
+        });
     }
 
     render() {
@@ -178,9 +217,10 @@ class ContactData extends Component {
                             changed={(event) => this.inputChangedHandler(event, formElement.id)}
                             touched={formElement.config.touched}
                             shouldValidate={formElement.config.validation}
-                            invalid={!formElement.config.valid}/>
+                            invalid={!formElement.config.valid}
+                            errorMessage={formElement.config.errorMessage}/>
                     })}
-                    <Button buttonType="Success">ORDER</Button>
+                    <Button buttonType="Success" disabled={!this.state.isFormValid}>ORDER</Button>
                 </form>
             </Aux>
         );

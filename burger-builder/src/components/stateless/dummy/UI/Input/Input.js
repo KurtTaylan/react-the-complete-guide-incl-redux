@@ -3,10 +3,14 @@ import styledClasses from './Input.css';
 
 const input = (props) => {
     let inputElement;
+    let validationError;
     const inputClasses = [styledClasses.InputElement];
 
     if (props.shouldValidate && props.touched && props.invalid) {
         inputClasses.push(styledClasses.Invalid);
+        validationError = <p className={styledClasses.ValidationError}>{props.errorMessage}</p>;
+        console.log(props.errorMessage);
+        console.log(validationError);
     }
 
     switch (props.elementType) {
@@ -43,6 +47,7 @@ const input = (props) => {
         <div className={styledClasses.Input}>
             <label className={styledClasses.Label}>{props.label}</label>
             {inputElement}
+            {validationError}
         </div>
     );
 };

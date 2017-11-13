@@ -3,18 +3,23 @@ import styledClasses from './Input.css';
 
 const input = (props) => {
     let inputElement;
+    const inputClasses = [styledClasses.InputElement];
+
+    if (props.shouldValidate && props.invalid) {
+        inputClasses.push(styledClasses.Invalid);
+    }
 
     switch (props.elementType) {
         case ('textArea'):
             inputElement = <textarea {...props.elementConfig}
-                                     className={styledClasses.InputElement}
+                                     className={inputClasses.join(' ')}
                                      value={props.value}
                                      onChange={props.changed}/>;
             break;
         case ('select'):
             inputElement = (
                 <select {...props.elementConfig}
-                        className={styledClasses.InputElement}
+                        className={inputClasses.join(' ')}
                         value={props.value}
                         onChange={props.changed}>
                     {props.elementConfig.options.map(option => {
@@ -28,7 +33,7 @@ const input = (props) => {
             break;
         default:
             inputElement = <input {...props.elementConfig}
-                                  className={styledClasses.InputElement}
+                                  className={inputClasses.join(' ')}
                                   value={props.value}
                                   onChange={props.changed}/>;
             break;

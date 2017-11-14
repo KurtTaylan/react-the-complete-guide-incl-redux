@@ -7,6 +7,20 @@ const initialState = {
 
 // Reducer
 const rootReducer = (oldState = initialState, action) => {
+
+    if (action.type === 'INC_COUNTER'){
+        return {
+            ...oldState,
+            counter: oldState.counter + 1
+        }
+    }
+
+    if (action.type === 'ADD_COUNTER'){
+        return {
+            ...oldState,
+            counter: oldState.counter + action.value
+        }
+    }
     return oldState;
 };
 
@@ -16,6 +30,7 @@ console.log(store.getState());
 
 
 // Dispatching Action
-
-
+store.dispatch({type: 'INC_COUNTER'});
+store.dispatch({type: 'ADD_COUNTER', value: 10});
+console.log(store.getState());
 // Subscription

@@ -3,6 +3,13 @@ const initialState = {
 }
 
 const reducer = (oldState = initialState, action) => {
+    if (action.type === 'INCREMENT') {
+        return {
+            counter: oldState.counter + 1
+        }
+    }
+
+
     return oldState;
 };
 

@@ -1,8 +1,7 @@
-import * as actionTypes from './action';
+import * as actionTypes from '../action';
 
 const initialState = {
     counter: 0,
-    results: []
 }
 
 const reducer = (oldState = initialState, action) => {

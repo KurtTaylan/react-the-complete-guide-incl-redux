@@ -11,16 +11,8 @@ import baseClient from "../../../../client-base";
 import {connect} from "react-redux";
 import * as actionTypes from '../../../../store/action/burgerBuilderActions';
 
-const INGREDIENT_PRICES = {
-    salad: 0.5,
-    cheese: 0.4,
-    meat: 2,
-    bacon: 1
-};
-
 class BurgerBuilder extends Component {
     state = {
-        notPurchaseable: true,
         purchasing: false,
         loading: false,
         error: false
@@ -47,7 +39,8 @@ class BurgerBuilder extends Component {
         });
     };
 
-    updatePurchaseState(ingredients) {
+    updatePurchaseState() {
+        const ingredients = this.props.ingredients;
         const sum = Object.keys(ingredients)
             .map(igKey => {
                 return ingredients[igKey]
@@ -56,47 +49,7 @@ class BurgerBuilder extends Component {
                 return sum + el;
             }, 0);
 
-        this.setState({
-            notPurchaseable: sum <= 0
-        });
-    };
-
-    addIngredientHandler = (type) => {
-        const oldCount = this.props.ingredients[type];
-        const updatedCount = oldCount + 1;
-        const updatedIngredient = {
-            ...this.props.ingredients
-        };
-        updatedIngredient[type] = updatedCount;
-        const priceAddition = INGREDIENT_PRICES[type];
-        const oldPrice = this.props.price;
-        const newPrice = oldPrice + priceAddition;
-
-        this.setState({
-            totalPrice: newPrice,
-            ingredients: updatedIngredient
-        }, this.updatePurchaseState(updatedIngredient));
-    };
-
-    removeIngredientHandler = (type) => {
-        const oldCount = this.props.ingredients[type];
-        if (oldCount <= 0) {
-            return;
-        }
-        const updatedCount = oldCount - 1;
-        const updatedIngredient = {
-            ...this.props.ingredients
-        };
-        updatedIngredient[type] = updatedCount;
-        const priceDeduction = INGREDIENT_PRICES[type];
-        const oldPrice = this.props.price;
-        const newPrice = oldPrice - priceDeduction;
-
-        this.setState({
-            totalPrice: newPrice,
-            ingredients: updatedIngredient
-        }, this.updatePurchaseState(updatedIngredient));
-
+        return sum > 0
     };
 
     render() {
@@ -119,7 +72,7 @@ class BurgerBuilder extends Component {
                         ingredientRemoved={this.props.onIngredientRemoved}
                         disabled={disabledInfo}
                         totalPrice={this.props.price}
-                        notPurchaseable={this.state.notPurchaseable}
+                        purchaseable={this.updatePurchaseState()}
                         ordered={this.purchaseHandler}/>
                 </Aux>);
 
@@ -160,4 +113,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (withErrorHandler(BurgerBuilder, baseClient));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurgerBuilder, baseClient));

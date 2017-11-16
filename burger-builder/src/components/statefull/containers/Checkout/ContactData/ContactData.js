@@ -6,6 +6,7 @@ import Button from "../../../../stateless/dummy/UI/Button/Button";
 import Spinner from "../../../../stateless/dummy/UI/Spinner/Spinner";
 import Aux from "../../../../stateless/hoc/Aux/Aux";
 import Input from "../../../../stateless/dummy/UI/Input/Input";
+import {connect} from "react-redux";
 
 const INVALID_EMPTY_STRING = 'Check for Empty Input';
 const INVALID_MIN_LENGTH = 'Check for Min Length';
@@ -115,7 +116,7 @@ class ContactData extends Component {
 
         const order = {
             ingredients: this.props.ingredients,
-            totalPrice: this.props.totalPrice,
+            totalPrice: this.props.price,
             orderData: formData
         };
         baseClient.post('/orders.json', order)
@@ -239,4 +240,11 @@ class ContactData extends Component {
 
 ContactData.propTypes = {};
 
-export default ContactData;
+const mapStateToProps = state => {
+    return {
+        ingredients: state.ingredients,
+        price: state.totalPrice
+    }
+};
+
+export default connect(mapStateToProps)(ContactData);

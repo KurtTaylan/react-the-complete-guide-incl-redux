@@ -1,4 +1,4 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux';
+import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import burgerBuilderReducer from './reducer/bugerBuilderReducer';
 
 const logger = store => next => action => {
@@ -11,7 +11,10 @@ const logger = store => next => action => {
 const rootReducer = combineReducers({
     burgerBuilder: burgerBuilderReducer
 });
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(rootReducer, applyMiddleware(logger));
+const store = createStore(
+    rootReducer,
+    composeEnhancers(applyMiddleware(logger)));
 
 export default store;

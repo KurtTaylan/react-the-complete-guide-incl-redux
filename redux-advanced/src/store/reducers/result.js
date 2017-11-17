@@ -10,9 +10,14 @@ const reducer = (state = initialState, action) => {
         case actionTypes.STORE_RESULT:
             return updateObject(state, {results: state.results.concat({id: new Date(), value: action.result})});
         case actionTypes.DELETE_RESULT:
-            return updateObject(state, {results: state.results.filter(result => result.id !== action.resultElId)});
+            return deleteObject(state,action);
     }
     return state;
+};
+
+const deleteObject = (state, action) => {
+    const updatedArray = state.results.filter(result => result.id !== action.resultElId);
+    return updateObject(state, { result: updatedArray})
 };
 
 export default reducer;

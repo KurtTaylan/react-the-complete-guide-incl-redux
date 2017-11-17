@@ -1,5 +1,5 @@
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
-import burgerBuilderReducer from './reducer/bugerBuilderReducer';
+import burgerBuilderReducer from './reducer/burgerBuilderReducer';
 
 const logger = store => next => action => {
     console.log('[Middleware] Dispatching, ', action);

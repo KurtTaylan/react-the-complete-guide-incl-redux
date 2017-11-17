@@ -9,7 +9,7 @@ import Spinner from "../../../stateless/dummy/UI/Spinner/Spinner";
 import withErrorHandler from "../../../stateless/hoc/withErrorHandler/withErrorHandler";
 import baseClient from "../../../../client-base";
 import {connect} from "react-redux";
-import * as actionTypes from '../../../../store/action/burgerBuilderActions';
+import * as actionTypes from '../../../../store/action/actionTypes';
 
 class BurgerBuilder extends Component {
     state = {
@@ -95,13 +95,13 @@ const mapStateToProps = state => {
         ingredients: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice
     };
-}
+};
 
 const mapDispatchToProps = dispatch => {
     return {
         onIngredientAdded: (ingName) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: ingName}),
         onIngredientRemoved: (ingName) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingName})
     }
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurgerBuilder, baseClient));

@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "https://react-my-burger-6a216.firebaseapp.com/",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import Input from "../../../stateless/dummy/UI/Input/Input";
 import Button from "../../../stateless/dummy/UI/Button/Button";
 import {checkValidity} from "../../util";
 import * as styledClasses from './Auth.css';
+import * as actions from '../../../../store/action'
+import withErrorHandler from "../../../stateless/hoc/withErrorHandler/withErrorHandler";
+import {connect} from "react-redux";
+import baseClient from "../../../../client-base";
 
 class Auth extends Component {
     state = {
@@ -52,11 +55,12 @@ class Auth extends Component {
             }
         };
         this.setState({controls: updatedControls});
-    }
+    };
+
     submitHandler = (event) => {
         event.preventDefault();
         this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value);
-    }
+    };
 
     render() {
         const formElementsArray = [];
@@ -92,4 +96,17 @@ class Auth extends Component {
 
 Auth.propTypes = {};
 
-export default Auth;
+const mapStateToProps = state => {
+    return {
+        email: state.auth.email,
+        password: state.auth.password
+    }
+};
+
+const mapsDispatchToProps = dispatch => {
+    return {
+        onAuth: (email, password) => dispatch(actions.auth(email, password))
+    }
+};
+
+export default connect(mapStateToProps, mapsDispatchToProps)(withErrorHandler(Auth, baseClient));

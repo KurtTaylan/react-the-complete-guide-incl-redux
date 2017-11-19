@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import baseClient from '../../client-base';
+import * as go from '../../client';
 
 export const addIngredient = (ingredientName) => {
     return {
@@ -18,7 +18,7 @@ export const removeIngredient = (ingredientName) => {
 
 export const initIngredient = () => {
     return dispatch => {
-        baseClient.get('/ingredient.json')
+        go.baseAPI.get('/ingredient.json')
             .then(response => {
                 dispatch(setIngredient(response.data));
             }).catch(error => {

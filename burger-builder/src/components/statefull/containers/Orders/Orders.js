@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Order from "../../../stateless/dummy/Order/Order";
-import baseClient from '../../../../client-base'
+import * as go from '../../../../client'
 import withErrorHandler from "../../../stateless/hoc/withErrorHandler/withErrorHandler";
 import * as actions from '../../../../store/action'
 import {connect} from "react-redux";
@@ -47,4 +47,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, baseClient));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, go.baseAPI));

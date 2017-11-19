@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes'
-import baseClient from "../../client-base";
+import * as go from "../../client";
 
 export const purchaseBurgerInit = () => {
     return {
@@ -32,7 +32,7 @@ export const purchaseBurgerFailed = (error) => {
 export const purchaseBurger = (orderData) => {
     return dispatch => {
         dispatch(purchaseBurgerStart());
-        baseClient.post('/orders.json', orderData)
+        go.baseAPI.post('/orders.json', orderData)
             .then(response => {
                 dispatch(purchaseBurgerSuccess(response.data.name, response.data))
             })
@@ -66,7 +66,7 @@ export const fetchOrdersFailed = (error) => {
 export const fetchOrders = (orderData) => {
     return dispatch => {
         dispatch(fetchOrdersStart());
-        baseClient.get('/orders.json')
+        go.baseAPI.get('/orders.json')
             .then(response => {
                 const fetchedOrders = [];
                 for (let key in response.data) {

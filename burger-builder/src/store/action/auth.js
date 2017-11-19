@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes';
+import * as go from '../../client'
 
 export const authStart = () => {
     return {
@@ -23,7 +24,20 @@ export const authFailed = (error) => {
 export const auth = (email, password) => {
     return dispatch => {
         dispatch(authStart());
-
+        const authData = {
+            email: email,
+            password: password,
+            returnSecureToken: true
+        };
+        go.authSignUpAPI.post(null,authData)
+            .then(response => {
+                console.log(response.data);
+                dispatch(authSuccess(response.data));
+            })
+            .catch(error => {
+                console.log(error);
+                dispatch(authFailed(error));
+            });
     }
 };
 

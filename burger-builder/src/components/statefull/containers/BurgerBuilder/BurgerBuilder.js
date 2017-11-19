@@ -7,7 +7,7 @@ import BuildControls from "../../../stateless/dummy/Burger/BuildControls/BuildCo
 import OrderSummary from "../../../stateless/dummy/Burger/OrderSummary/OrderSummary";
 import Spinner from "../../../stateless/dummy/UI/Spinner/Spinner";
 import withErrorHandler from "../../../stateless/hoc/withErrorHandler/withErrorHandler";
-import baseClient from "../../../../client-base";
+import * as go from "../../../../client/client";
 import {connect} from "react-redux";
 import * as actions from '../../../../store/action';
 
@@ -109,4 +109,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurgerBuilder, baseClient));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurgerBuilder, go.baseAPI));

@@ -6,7 +6,7 @@ import * as styledClasses from './Auth.css';
 import * as actions from '../../../../store/action'
 import withErrorHandler from "../../../stateless/hoc/withErrorHandler/withErrorHandler";
 import {connect} from "react-redux";
-import baseClient from "../../../../client-base";
+import * as go from "../../../../client";
 
 class Auth extends Component {
     state = {
@@ -109,4 +109,4 @@ const mapsDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapsDispatchToProps)(withErrorHandler(Auth, baseClient));
+export default connect(mapStateToProps, mapsDispatchToProps)(withErrorHandler(Auth, go.baseAPI));

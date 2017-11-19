@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import styledClasses from './ContactData.css'
-import baseClient from '../../../../../client-base'
+import * as go from '../../../../../client'
 import Button from "../../../../stateless/dummy/UI/Button/Button";
 import Spinner from "../../../../stateless/dummy/UI/Spinner/Spinner";
 import Aux from "../../../../stateless/hoc/Aux/Aux";
@@ -203,4 +203,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, baseClient));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, go.baseAPI));

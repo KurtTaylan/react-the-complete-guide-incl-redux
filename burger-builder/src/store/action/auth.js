@@ -21,7 +21,7 @@ export const authFailed = (error) => {
     }
 };
 
-export const auth = (email, password) => {
+export const auth = (email, password, isSignIn) => {
     return dispatch => {
         dispatch(authStart());
         const authData = {
@@ -29,7 +29,12 @@ export const auth = (email, password) => {
             password: password,
             returnSecureToken: true
         };
-        go.authSignUpAPI.post(null,authData)
+
+        let client = go.authSignUpAPI;
+        if (isSignIn) {
+            client = go.authSignInAPI;
+        }
+        client.post(null, authData)
             .then(response => {
                 console.log(response.data);
                 dispatch(authSuccess(response.data));

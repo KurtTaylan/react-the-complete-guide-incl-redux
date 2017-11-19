@@ -9,7 +9,7 @@ import Spinner from "../../../stateless/dummy/UI/Spinner/Spinner";
 import withErrorHandler from "../../../stateless/hoc/withErrorHandler/withErrorHandler";
 import baseClient from "../../../../client-base";
 import {connect} from "react-redux";
-import * as burgerBuilderActions from '../../../../store/action';
+import * as actions from '../../../../store/action';
 
 class BurgerBuilder extends Component {
     state = {
@@ -31,6 +31,7 @@ class BurgerBuilder extends Component {
     };
 
     purchaseContinueHandler = () => {
+        this.props.onPurchaseInit();
         this.props.history.push({pathname: '/checkout'});
     };
 
@@ -101,9 +102,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onIngredientAdded: (ingName) => dispatch(burgerBuilderActions.addIngredient(ingName)),
-        onIngredientRemoved: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName)),
-        onInitIngredients: () => dispatch(burgerBuilderActions.initIngredient())
+        onIngredientAdded: (ingName) => dispatch(actions.addIngredient(ingName)),
+        onIngredientRemoved: (ingName) => dispatch(actions.removeIngredient(ingName)),
+        onInitIngredients: () => dispatch(actions.initIngredient()),
+        onPurchaseInit: () => dispatch(actions.purchaseBurgerInit())
     }
 };
 

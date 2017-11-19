@@ -7,6 +7,8 @@ import Spinner from "../../../../stateless/dummy/UI/Spinner/Spinner";
 import Aux from "../../../../stateless/hoc/Aux/Aux";
 import Input from "../../../../stateless/dummy/UI/Input/Input";
 import {connect} from "react-redux";
+import withErrorHandler from "../../../../stateless/hoc/withErrorHandler/withErrorHandler";
+import * as actions from "../../../../../store/action";
 
 const INVALID_EMPTY_STRING = 'Check for Empty Input';
 const INVALID_MIN_LENGTH = 'Check for Min Length';
@@ -101,13 +103,11 @@ class ContactData extends Component {
                 touched: false
             },
         },
-        isFormValid: false,
-        loading: false
+        isFormValid: false
     }
 
     orderHandler = (event) => {
         event.preventDefault();
-        this.setState({loading: true});
 
         let formData = {};
         for (let formElementId in this.state.orderForm) {
@@ -119,23 +119,8 @@ class ContactData extends Component {
             totalPrice: this.props.price,
             orderData: formData
         };
-        baseClient.post('/orders.json', order)
-            .then(response => {
-                console.log(response);
-                this.setState({
-                    loading: false,
-                    purchasing: false
-                });
-                this.props.history.replace('/');
-            })
-            .catch(error => {
-                console.log(error);
-                this.setState({
-                    loading: false,
-                    purchasing: false
-                });
-            });
-    }
+        this.props.onOrderBurger(order);
+    };
 
     checkValidity = (value, rules) => {
         let validity = {
@@ -226,7 +211,7 @@ class ContactData extends Component {
             </Aux>
         );
 
-        if (this.state.loading) {
+        if (this.props.loading) {
             form = <Spinner/>;
         }
 
@@ -242,9 +227,16 @@ ContactData.propTypes = {};
 
 const mapStateToProps = state => {
     return {
-        ingredients: state.ingredients,
-        price: state.totalPrice
+        loading: state.order.loading,
+        ingredients: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice
     }
 };
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = dispatch => {
+    return {
+        onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, baseClient));

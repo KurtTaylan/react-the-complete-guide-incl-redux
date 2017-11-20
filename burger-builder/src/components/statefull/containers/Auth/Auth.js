@@ -7,6 +7,7 @@ import * as actions from '../../../../store/action'
 import withErrorHandler from "../../../stateless/hoc/withErrorHandler/withErrorHandler";
 import {connect} from "react-redux";
 import * as go from "../../../../client";
+import Spinner from "../../../stateless/dummy/UI/Spinner/Spinner";
 
 class Auth extends Component {
     state = {
@@ -80,7 +81,7 @@ class Auth extends Component {
             });
         }
 
-        const form = formElementsArray.map(formElement => (
+        let form = formElementsArray.map(formElement => (
             <Input
                 key={formElement.id}
                 elementType={formElement.config.elementType}
@@ -92,8 +93,20 @@ class Auth extends Component {
                 changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
         ));
 
+        if (this.props.loading) {
+            form = <Spinner/>;
+        }
+
+        let errorMessage = null;
+        if (this.props.error) {
+            errorMessage = (
+                <p>{this.props.error.message}</p>
+            );
+        }
+
         return (
             <div className={styledClasses.Auth}>
+                {errorMessage}
                 <form onSubmit={this.submitHandler}>
                     {form}
                     <Button buttonType="Success">SUBMIT</Button>
@@ -113,7 +126,9 @@ Auth.propTypes = {};
 const mapStateToProps = state => {
     return {
         email: state.auth.email,
-        password: state.auth.password
+        password: state.auth.password,
+        loading: state.auth.loading,
+        error: state.auth.error
     }
 };
 

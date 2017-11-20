@@ -41,8 +41,8 @@ export const auth = (email, password, isSignIn) => {
                 dispatch(authSuccess(response.data.localId, response.data.idToken));
             })
             .catch(error => {
-                console.log(error);
-                dispatch(authFailed(error));
+                console.log(error.response);
+                dispatch(authFailed(error.response.data.error));
             });
     }
 };

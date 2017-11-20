@@ -1,6 +1,21 @@
 import * as actionTypes from './actionTypes';
 import * as go from '../../client'
 
+
+export const checkAuthTimeout = (expirationTime) => {
+    return dispatch => {
+        setTimeout(() => {
+            dispatch(logout());
+        }, expirationTime * 1000);
+    };
+};
+
+export const logout = () => {
+    return {
+        type: actionTypes.AUTH_LOGOUT
+    };
+};
+
 export const authStart = () => {
     return {
         type: actionTypes.AUTH_START
@@ -39,6 +54,7 @@ export const auth = (email, password, isSignIn) => {
             .then(response => {
                 console.log(response.data);
                 dispatch(authSuccess(response.data.localId, response.data.idToken));
+                dispatch(checkAuthTimeout(response.data.expiresIn));
             })
             .catch(error => {
                 console.log(error.response);

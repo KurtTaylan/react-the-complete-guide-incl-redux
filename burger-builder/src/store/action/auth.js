@@ -7,10 +7,11 @@ export const authStart = () => {
     }
 };
 
-export const authSuccess = (authData) => {
+export const authSuccess = (userId, token) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
-        authData: authData
+        token: token,
+        userId: userId
     }
 };
 
@@ -37,7 +38,7 @@ export const auth = (email, password, isSignIn) => {
         client.post(null, authData)
             .then(response => {
                 console.log(response.data);
-                dispatch(authSuccess(response.data));
+                dispatch(authSuccess(response.data.localId, response.data.idToken));
             })
             .catch(error => {
                 console.log(error);

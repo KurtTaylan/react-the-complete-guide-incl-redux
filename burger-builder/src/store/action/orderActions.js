@@ -29,10 +29,10 @@ export const purchaseBurgerFailed = (error) => {
 };
 
 
-export const purchaseBurger = (orderData) => {
+export const purchaseBurger = (orderData, token) => {
     return dispatch => {
         dispatch(purchaseBurgerStart());
-        go.baseAPI.post('/orders.json', orderData)
+        go.baseAPI.post('/orders.json?auth=' + token, orderData)
             .then(response => {
                 dispatch(purchaseBurgerSuccess(response.data.name, response.data))
             })
@@ -63,10 +63,10 @@ export const fetchOrdersFailed = (error) => {
 };
 
 
-export const fetchOrders = (orderData) => {
+export const fetchOrders = (token) => {
     return dispatch => {
         dispatch(fetchOrdersStart());
-        go.baseAPI.get('/orders.json')
+        go.baseAPI.get('/orders.json?auth=' + token)
             .then(response => {
                 const fetchedOrders = [];
                 for (let key in response.data) {

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import styledClasses from './Person.css';
 import withClassDiv from '../../../hoc/withClassDiv';
-import Aux from "../../../hoc/Aux";
+import Aux from "../../../hoc/PlaceHolder";
 
 
 class Person extends Component {

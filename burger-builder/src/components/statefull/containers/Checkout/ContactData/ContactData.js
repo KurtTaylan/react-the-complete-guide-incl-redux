@@ -4,7 +4,7 @@ import styledClasses from './ContactData.css'
 import * as go from '../../../../../client'
 import Button from "../../../../stateless/dummy/UI/Button/Button";
 import Spinner from "../../../../stateless/dummy/UI/Spinner/Spinner";
-import Aux from "../../../../stateless/hoc/Aux/Aux";
+import Aux from "../../../../stateless/hoc/PlaceHolder/PlaceHolder";
 import Input from "../../../../stateless/dummy/UI/Input/Input";
 import {connect} from "react-redux";
 import withErrorHandler from "../../../../stateless/hoc/withErrorHandler/withErrorHandler";

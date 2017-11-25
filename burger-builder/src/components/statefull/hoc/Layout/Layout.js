@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import styleClasses from './Layout.css';
-import Aux from "../../../stateless/hoc/Aux/Aux";
+import Aux from "../../../stateless/hoc/PlaceHolder/PlaceHolder";
 import Toolbar from "../../../stateless/dummy/Navigation/Toolbar/Toolbar";
 import SideDrawer from "../../../stateless/dummy/SideDrawer/SideDrawer";
 import {connect} from "react-redux";

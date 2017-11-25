@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import Modal from "../../../stateless/dummy/UI/Modal/Modal";
-import Aux from "../../../stateless/hoc/Aux/Aux";
+import Aux from "../../../stateless/hoc/PlaceHolder/PlaceHolder";
 import Burger from "../../../stateless/dummy/Burger/Burger";
 import BuildControls from "../../../stateless/dummy/Burger/BuildControls/BuildControls";
 import OrderSummary from "../../../stateless/dummy/Burger/OrderSummary/OrderSummary";

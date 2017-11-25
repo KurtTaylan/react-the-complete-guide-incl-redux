@@ -55,7 +55,7 @@ export const auth = (email, password, isSignIn) => {
                 console.log(response.data);
                 dispatch(authSuccess(response.data.localId, response.data.idToken));
                 dispatch(checkAuthTimeout(response.data.expiresIn));
-            })
+            })git
             .catch(error => {
                 console.log(error.response);
                 dispatch(authFailed(error.response.data.error));

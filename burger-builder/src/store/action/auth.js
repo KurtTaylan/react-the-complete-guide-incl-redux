@@ -53,7 +53,6 @@ export const authCheckState = () => {
         const userId = localStorage.getItem('userId');
         dispatch(authSuccess(userId, token));
         let difference = expireTime.getTime() - new Date().getTime();
-        console.log('difference: ', difference / 1000);
         dispatch(checkAuthTimeout((difference / 1000)));
       }
     }

@@ -11,16 +11,14 @@ import * as go from "../../../../client/client";
 import {connect} from "react-redux";
 import * as actions from '../../../../store/action';
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
   state = {
     purchasing: false,
   };
   
-  
   componentDidMount() {
     this.props.onInitIngredients();
   }
-  
   
   purchaseHandler = () => {
     if (this.props.isAuthenticated) {
